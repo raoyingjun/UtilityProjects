@@ -200,6 +200,7 @@ export const TASK_COPY: Record<
     officialNotes: [
       '传统启动图标输出到 mipmap-mdpi 至 mipmap-xxxhdpi，基准尺寸为 48dp。',
       '自适应图标由背景层与前景层组成，设计画布为 108dp，中心 66dp 为安全区。',
+      'ic_launcher_round 为整圆图标，供请求圆形图标的启动器使用，需在 AndroidManifest 配置 android:roundIcon="@mipmap/ic_launcher_round"。',
       '会生成 ic_launcher.xml 与 ic_launcher_round.xml，可在 AndroidManifest 中使用 @mipmap/ic_launcher。',
     ],
     outputRoot: 'android/app/src/main/res',
@@ -211,7 +212,7 @@ export const TASK_COPY: Record<
     officialNotes: [
       '输出到 drawable-mdpi 至 drawable-xxxhdpi，基准尺寸为 24dp。',
       '通知小图标应是透明背景上的 alpha 蒙版，不应依赖彩色通道。',
-      '从应用图标生成时会先识别边缘底色、清理边界残留，再输出白色 alpha 蒙版。',
+      '可上传应用图标素材作为通知图标来源，工具会尝试清理底色并输出白色 alpha 蒙版。',
     ],
     outputRoot: 'android/app/src/main/res',
   },

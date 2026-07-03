@@ -11,9 +11,14 @@ export type ProjectHandle = {
   lastOpenedAt: number
 }
 
+export type SkippedWrite = {
+  path: string
+  reason: string
+}
+
 export type WriteReport = {
   written: string[]
-  skipped: string[]
+  skipped: SkippedWrite[]
 }
 
 type PermissionMode = 'read' | 'readwrite'
@@ -34,6 +39,7 @@ export type FileSystemDirectoryHandle = {
     options?: { create?: boolean },
   ) => Promise<FileSystemFileHandle>
   getFile?: (name: string) => Promise<File>
+  isSameEntry?: (other: FileSystemDirectoryHandle) => Promise<boolean>
   queryPermission?: (descriptor?: FileSystemPermissionDescriptor) => Promise<PermissionState>
   requestPermission?: (descriptor?: FileSystemPermissionDescriptor) => Promise<PermissionState>
 }
@@ -117,19 +123,54 @@ export async function saveStoredProjects(projects: ProjectHandle[]) {
   await writeProjectStore(projects)
 }
 
-export function upsertProject(projects: ProjectHandle[], project: ProjectHandle): ProjectHandle[] {
-  const matchingIndex = projects.findIndex((item) => item.root.name === project.root.name)
+export async function upsertProject(
+  projects: ProjectHandle[],
+  project: ProjectHandle,
+): Promise<{ projects: ProjectHandle[]; projectId: string }> {
+  const matchingIndex = await findMatchingProjectIndex(projects, project)
   if (matchingIndex < 0) {
-    return [project, ...projects]
+    return {
+      projects: [project, ...projects],
+      projectId: project.id,
+    }
   }
 
   const nextProjects = [...projects]
+  const existing = nextProjects[matchingIndex]
   nextProjects[matchingIndex] = {
     ...project,
-    id: nextProjects[matchingIndex].id,
-    createdAt: nextProjects[matchingIndex].createdAt,
+    id: existing.id,
+    createdAt: existing.createdAt,
   }
-  return nextProjects
+  return {
+    projects: nextProjects,
+    projectId: existing.id,
+  }
+}
+
+async function findMatchingProjectIndex(
+  projects: ProjectHandle[],
+  project: ProjectHandle,
+): Promise<number> {
+  for (const [index, item] of projects.entries()) {
+    // 同名目录可能位于不同路径，优先用 isSameEntry 精确比较，避免互相覆盖。
+    if (item.root.isSameEntry && project.root.isSameEntry) {
+      try {
+        if (await item.root.isSameEntry(project.root)) {
+          return index
+        }
+        continue
+      } catch {
+        // isSameEntry 失败时回退到目录名比较。
+      }
+    }
+
+    if (item.root.name === project.root.name) {
+      return index
+    }
+  }
+
+  return -1
 }
 
 export async function validateFlutterProject(root: FileSystemDirectoryHandle): Promise<string[]> {
@@ -175,7 +216,7 @@ export async function writeAssetsToProject(
       const parts = asset.path.split('/').filter(Boolean)
       const fileName = parts.pop()
       if (!fileName) {
-        report.skipped.push(asset.path)
+        report.skipped.push({ path: asset.path, reason: '输出路径无效' })
         continue
       }
       const dir = await ensureDirectory(root, parts)
@@ -184,8 +225,11 @@ export async function writeAssetsToProject(
       await writable.write(asset.blob)
       await writable.close()
       report.written.push(asset.path)
-    } catch {
-      report.skipped.push(asset.path)
+    } catch (error) {
+      report.skipped.push({
+        path: asset.path,
+        reason: error instanceof Error && error.message ? error.message : '写入失败',
+      })
     }
     onProgress?.(index + 1, assets.length, asset.label)
   }
@@ -210,7 +254,7 @@ export async function downloadZip(
   const url = URL.createObjectURL(blob)
   const anchor = document.createElement('a')
   anchor.href = url
-  anchor.download = `${prefix}.zip`
+  anchor.download = `${prefix}-${formatDateStamp(new Date())}.zip`
   document.body.append(anchor)
   anchor.click()
   anchor.remove()
@@ -263,6 +307,12 @@ async function ensureDirectory(
 
 function createProjectId(name: string): string {
   return `${name}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+}
+
+function formatDateStamp(date: Date): string {
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${date.getFullYear()}${month}${day}`
 }
 
 function openProjectDb(): Promise<IDBDatabase> {

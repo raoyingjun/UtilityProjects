@@ -654,16 +654,16 @@
 .workspace {
   min-width: 0;
   display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
 }
 
 .topbar {
-  min-height: 82px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 22px 28px;
+  padding: 14px 28px;
   border-bottom: 1px solid var(--border);
   background: #ffffff;
 }
@@ -711,24 +711,23 @@
 }
 
 .workspace-status {
-  min-width: 220px;
-  max-width: min(420px, 42vw);
-  display: grid;
-  justify-items: end;
-  gap: 7px;
+  min-width: 0;
+  max-width: min(480px, 48vw);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .workspace-status-detail {
   min-width: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
   color: #487266;
   font-size: 12px;
   font-weight: 680;
   line-height: 1.35;
-  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .workspace-status-detail svg {
@@ -746,6 +745,127 @@
 
 .workspace-status-detail.error svg {
   color: #be123c;
+}
+
+.unsupported-shell {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(237, 242, 239, 0.86)),
+    var(--page);
+  color: var(--ink);
+}
+
+.unsupported-panel {
+  width: min(760px, 100%);
+  display: grid;
+  gap: 22px;
+  padding: 34px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.1);
+}
+
+.unsupported-mark {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: #1c6b58;
+}
+
+.unsupported-copy {
+  display: grid;
+  gap: 10px;
+}
+
+.unsupported-copy h1 {
+  margin: 0;
+  color: var(--ink-strong);
+  font-size: 34px;
+  line-height: 1.08;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.unsupported-copy p {
+  margin: 0;
+  max-width: 660px;
+  color: #4d605a;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.unsupported-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.unsupported-actions a {
+  text-decoration: none;
+}
+
+.unsupported-url {
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 7px;
+  border: 1px solid #d1e3ea;
+  background: #f5fafc;
+  color: #214d5f;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.unsupported-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.unsupported-steps div {
+  min-width: 0;
+  min-height: 108px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8faf8;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.unsupported-steps strong {
+  color: var(--ink-strong);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.unsupported-steps span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.unsupported-reasons {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #8a4b08;
+  font-size: 13px;
+  font-weight: 680;
+  line-height: 1.4;
+}
+
+.unsupported-reasons svg {
+  flex: 0 0 auto;
 }
 
 .circular-progress {
@@ -793,6 +913,76 @@
   pointer-events: auto;
 }
 
+.workflow-overview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  border-bottom: 1px solid var(--border);
+  background: var(--border);
+}
+
+.workflow-overview-card {
+  min-width: 0;
+  min-height: 82px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: #fbfcfd;
+  color: var(--ink);
+}
+
+.workflow-overview-card.ready {
+  background: #f3faf6;
+}
+
+.workflow-overview-card.attention {
+  background: #fff8ea;
+}
+
+.workflow-overview-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #174f40;
+  background: #e8f4ee;
+}
+
+.workflow-overview-card.attention .workflow-overview-icon {
+  color: #8a4b08;
+  background: #fff1d0;
+}
+
+.workflow-overview-card span {
+  display: block;
+  color: #60736d;
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1.2;
+}
+
+.workflow-overview-card strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--ink-strong);
+  font-size: 14px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workflow-overview-card p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
 .processing-copy {
   min-width: 0;
   display: flex;
@@ -829,26 +1019,28 @@
 
 .stepper {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(116px, 1fr));
   gap: 1px;
   background: var(--border);
   border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .stepper button {
-  min-height: 70px;
+  min-width: 0;
+  min-height: 48px;
   border: 0;
   background: #ffffff;
   color: var(--muted);
-  display: grid;
-  grid-template-columns: 18px minmax(0, auto);
-  grid-template-rows: auto auto;
-  align-content: center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  column-gap: 8px;
-  row-gap: 2px;
+  gap: 8px;
+  padding: 0 12px;
   cursor: pointer;
   font: inherit;
+  white-space: nowrap;
   transition:
     background-color 0.16s ease,
     box-shadow 0.16s ease,
@@ -861,18 +1053,21 @@
 }
 
 .stepper button svg {
-  grid-row: 1 / span 2;
-  align-self: center;
+  flex: none;
 }
 
 .stepper span {
+  min-width: 0;
   font-size: 12px;
   font-weight: 680;
+  line-height: 1;
 }
 
 .stepper strong {
+  min-width: 0;
   color: var(--ink);
   font-size: 14px;
+  line-height: 1;
 }
 
 .stepper button.active {
@@ -881,10 +1076,24 @@
   box-shadow: inset 0 -3px 0 #1c6b58;
 }
 
+.stepper button.complete {
+  color: #174f40;
+  background: #f8fbf9;
+}
+
+.stepper button.complete strong {
+  color: #174f40;
+}
+
 .stepper button:disabled {
   cursor: not-allowed;
   color: #a6b0ac;
   background: #f7f8f7;
+}
+
+.stepper button:disabled span,
+.stepper button:disabled strong {
+  color: #a6b0ac;
 }
 
 .content-grid {
@@ -895,14 +1104,14 @@
 
 .tool-panel {
   min-width: 0;
-  padding: 26px 28px;
+  padding: 20px 24px;
   border-right: 1px solid var(--border);
   background: #ffffff;
 }
 
 .step-content {
   display: grid;
-  gap: 18px;
+  gap: 14px;
   animation: content-enter 0.2s ease both;
 }
 
@@ -927,13 +1136,14 @@
 }
 
 .drop-zone {
-  min-height: 190px;
+  min-height: 124px;
   border: 1.5px dashed #9ab9ad;
   border-radius: 8px;
+  position: relative;
   display: grid;
   place-items: center;
   align-content: center;
-  gap: 10px;
+  gap: 8px;
   background: #f8fbf9;
   color: #175041;
   cursor: pointer;
@@ -945,14 +1155,21 @@
 }
 
 .drop-zone:hover,
-.drop-zone:focus-within {
+.drop-zone:focus-within,
+.drop-zone.drag-active {
   border-color: #7ab8a6;
   background: #eef8f3;
   box-shadow: inset 0 0 0 1px rgba(28, 107, 88, 0.08);
 }
 
+.drop-zone.drag-active {
+  border-style: solid;
+}
+
 .drop-zone input {
   position: absolute;
+  width: 1px;
+  height: 1px;
   opacity: 0;
   pointer-events: none;
 }
@@ -1108,20 +1325,234 @@
   line-height: 1.4;
 }
 
+.source-quality-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #d5e3dd;
+  border-radius: 8px;
+  background: #f7fbf9;
+}
+
+.source-quality-panel.fixable {
+  border-color: #c5dcd3;
+  background: #f3faf6;
+}
+
+.source-quality-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.source-quality-head > div {
+  min-width: 0;
+}
+
+.source-quality-head strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--ink-strong);
+  font-size: 15px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.smart-tag {
+  min-height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid #c9ddd5;
+  border-radius: 999px;
+  padding: 0 8px;
+  background: #ffffff;
+  color: #31574d;
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.smart-tag-fix {
+  border-color: #9fcbbb;
+  background: #edf8f3;
+  color: #174f40;
+}
+
+.smart-tag-auto {
+  border-color: #c8d6d0;
+  background: #f6faf8;
+  color: #40645b;
+}
+
+.smart-tag-ok,
+.smart-tag-applied {
+  border-color: #b7dacd;
+  background: #eaf8f2;
+  color: #174f40;
+}
+
+.smart-tag-queue {
+  border-color: #c8d6d0;
+  background: rgba(255, 255, 255, 0.68);
+  color: #59716a;
+  font-size: 12px;
+}
+
+.smart-fix-head-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.smart-fix-button {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding-inline: 11px;
+  font-size: 13px;
+}
+
+.smart-fix-list {
+  display: grid;
+  gap: 10px;
+}
+
+.smart-fix-item {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+  padding: 12px;
+  border: 1px solid #d5e3dd;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #31574d;
+}
+
+.smart-fix-item.fix {
+  border-color: #c5dcd3;
+  background: #fbfefd;
+}
+
+.smart-fix-item.applied {
+  border-color: #b7dacd;
+  background: #f1faf6;
+}
+
+.smart-fix-item > svg {
+  margin-top: 3px;
+  color: #1c6b58;
+}
+
+.smart-fix-item-copy {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.smart-fix-item-copy strong {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.smart-fix-item-copy p {
+  margin: 0;
+  color: color-mix(in srgb, currentColor 78%, #ffffff);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.smart-fix-item-action {
+  min-width: 92px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.smart-fix-passive-tag {
+  margin-top: 4px;
+}
+
+.smart-fix-item-action .primary-button,
+.smart-fix-item-action .secondary-button,
+.smart-fix-item-action .ghost-button {
+  min-height: 32px;
+  padding-inline: 10px;
+  font-size: 12px;
+}
+
+.smart-fix-empty {
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+  border: 1px dashed #c5dcd3;
+  border-radius: 8px;
+  color: #31574d;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 680;
+}
+
 .requirement-box {
   padding: 14px;
   border: 1px solid #d5e3dd;
   border-radius: 8px;
   background: #f7fbf9;
-  display: grid;
-  gap: 8px;
 }
 
-.requirement-box p {
-  margin: 0;
+.requirement-list {
+  margin: 10px 0 0;
+  padding-left: 20px;
   color: #31574d;
   font-size: 13px;
   line-height: 1.45;
+}
+
+.requirement-box li + li {
+  margin-top: 6px;
+}
+
+.requirement-box li::marker {
+  color: #6c9d8b;
+}
+
+.requirement-box > summary {
+  cursor: pointer;
+  list-style: none;
+  margin: 0;
+}
+
+.requirement-box > summary::-webkit-details-marker {
+  display: none;
+}
+
+.requirement-box > summary::after {
+  content: '';
+  margin-left: auto;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  opacity: 0.55;
+  transition: transform 0.15s ease;
+}
+
+.requirement-box[open] > summary::after {
+  transform: rotate(-135deg);
 }
 
 .control-row {
@@ -1375,6 +1806,14 @@
   margin-bottom: 18px;
 }
 
+.preview-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .preview-header span {
   color: var(--muted);
   font-size: 12px;
@@ -1394,21 +1833,1925 @@
   color: #174f40;
 }
 
+.device-preview-toggle {
+  min-height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #174f40;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 720;
+  cursor: pointer;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.device-preview-toggle {
+  padding: 0 11px;
+  gap: 6px;
+}
+
+.device-preview-toggle svg {
+  flex: 0 0 auto;
+}
+
+.device-preview-toggle:hover:not(:disabled) {
+  border-color: #8fc6b5;
+  background: #edf8f3;
+}
+
+.device-preview-toggle.active {
+  color: #ffffff;
+  border-color: #1c6b58;
+  background: #1c6b58;
+}
+
+.device-preview-toggle.active:hover:not(:disabled) {
+  color: #ffffff;
+  border-color: #155544;
+  background: #155544;
+}
+
+.device-preview-toggle:focus-visible {
+  outline: 2px solid rgba(28, 107, 88, 0.34);
+  outline-offset: 2px;
+}
+
+.device-preview-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.asset-preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.asset-preview-head .preview-title {
+  margin: 0;
+}
+
 .empty-preview {
-  min-height: 280px;
+  min-height: 168px;
   border: 1px dashed #b7c9c1;
   border-radius: 8px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 20px;
+  color: var(--muted);
+  background: #ffffff;
+  text-align: center;
+}
+
+.empty-preview-mark {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: #174f40;
+  background: #eef7f3;
+}
+
+.empty-preview strong {
+  color: var(--ink-strong);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.simulator-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 16px;
+  margin-bottom: 16px;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.simulator-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.simulator-card-head .preview-title {
+  margin-bottom: 4px;
+}
+
+.simulator-card-head span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.simulator-busy {
+  flex: 0 0 auto;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  color: #174f40;
+  background: #edf8f3;
+  font-weight: 720;
+}
+
+.simulator-busy.active {
+  color: #8a5a07;
+  background: #fff4db;
+}
+
+.simulator-empty {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  color: var(--muted);
+  border: 1px dashed #c8d6d0;
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.simulator-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.simulator-layout {
+  display: grid;
+  grid-template-columns: minmax(216px, 292px) minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.phone-shell {
+  width: min(100%, 292px);
+  aspect-ratio: 9 / 18.9;
+  padding: 10px;
+  border-radius: 32px;
+  position: relative;
+  background:
+    linear-gradient(145deg, #303943, #0c1217 54%, #252c34);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 0 0 4px #11161c,
+    0 18px 42px rgba(15, 23, 42, 0.22);
+}
+
+.phone-side-button {
+  position: absolute;
+  z-index: 1;
+  width: 3px;
+  border-radius: 999px;
+  background: #202832;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.16);
+}
+
+.phone-side-button.volume {
+  top: 118px;
+  left: -1px;
+  height: 74px;
+}
+
+.phone-side-button.power {
+  top: 156px;
+  right: -1px;
+  height: 86px;
+}
+
+.phone-shell.ios {
+  border-radius: 42px;
+  background:
+    linear-gradient(145deg, #d8dce2, #0f1115 18%, #1a1c20 82%, #ebedf0);
+}
+
+.phone-speaker {
+  position: absolute;
+  z-index: 6;
+  top: 14px;
+  left: 50%;
+  width: 78px;
+  height: 20px;
+  transform: translateX(-50%);
+  border-radius: 0 0 16px 16px;
+  background: #0a0d11;
+}
+
+.phone-shell.ios .phone-speaker {
+  width: 92px;
+  height: 25px;
+  border-radius: 0 0 18px 18px;
+}
+
+.phone-camera {
+  position: absolute;
+  z-index: 7;
+  top: 18px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin-left: 26px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 65% 38%, #6b8faa 0 14%, transparent 15%),
+    #05070a;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.phone-shell.android .phone-speaker {
+  width: 0;
+  height: 0;
+}
+
+.phone-shell.android .phone-camera {
+  top: 20px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+}
+
+.phone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+  overflow: hidden;
+  background: #17212b;
+  isolation: isolate;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  overscroll-behavior: contain;
+}
+
+.phone-shell.ios .phone-screen {
+  border-radius: 32px;
+}
+
+.android-home,
+.ios-home,
+.app-surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.android-home::after,
+.ios-home::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 8px;
+  width: 104px;
+  height: 4px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.android-home::after {
+  width: 82px;
+  opacity: 0.62;
+}
+
+.android-home {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(96, 165, 250, 0.6), transparent 28%),
+    radial-gradient(circle at 80% 24%, rgba(34, 197, 94, 0.34), transparent 34%),
+    linear-gradient(155deg, #172334 4%, #263b44 48%, #101820);
+}
+
+.android-home.light {
+  color: #24303a;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(14, 165, 233, 0.28), transparent 30%),
+    radial-gradient(circle at 82% 20%, rgba(34, 197, 94, 0.22), transparent 32%),
+    linear-gradient(155deg, #edf4f6 4%, #d9e7e8 48%, #f8fbf8);
+}
+
+.android-home.light::after {
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.android-home.notification-mode {
+  background:
+    radial-gradient(circle at 26% 18%, rgba(91, 141, 222, 0.42), transparent 34%),
+    linear-gradient(160deg, #17212b 0%, #283744 58%, #101820 100%);
+}
+
+.ios-home {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 28% 18%, #ff8e8e, transparent 32%),
+    radial-gradient(circle at 76% 30%, #53b8ff, transparent 34%),
+    linear-gradient(145deg, #2e4f9c, #6f4dae 52%, #121a42);
+}
+
+.ios-home.paper {
+  color: #28313a;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.7), transparent 42%),
+    linear-gradient(145deg, #dfe7ef, #f5f1e8 52%, #c6d2d8);
+}
+
+.ios-edit-done {
+  position: absolute;
+  z-index: 5;
+  top: 49px;
+  right: 17px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 12px;
+  color: #ffffff;
+  background: rgba(18, 24, 38, 0.42);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
+  font-size: 12px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.ios-home.paper .ios-edit-done {
+  color: #1f2933;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.sim-status-bar {
+  height: 42px;
+  padding: 12px 17px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  position: relative;
+  z-index: 4;
+}
+
+.sim-status-bar div {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.sim-status-bar strong {
+  font-size: 12px;
+}
+
+.status-notification-dot {
+  width: 17px;
+  height: 17px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 5px;
+  background: rgba(15, 23, 42, 0.52);
+}
+
+.status-notification-dot img {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+}
+
+.battery {
+  width: 22px;
+  height: 10px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  position: relative;
+}
+
+.battery::before {
+  content: "";
+  position: absolute;
+  inset: 2px 5px 2px 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.battery::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: -4px;
+  width: 2px;
+  height: 4px;
+  border-radius: 0 2px 2px 0;
+  background: currentColor;
+}
+
+.android-at-a-glance {
+  position: relative;
+  z-index: 3;
+  margin: 8px 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+}
+
+.android-at-a-glance strong,
+.android-at-a-glance span {
+  min-width: 0;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: rgba(4, 12, 20, 0.18);
+  backdrop-filter: blur(10px);
+  font-size: 12px;
+}
+
+.android-home.light .android-at-a-glance {
+  color: rgba(36, 48, 58, 0.9);
+}
+
+.android-home.light .android-at-a-glance strong,
+.android-home.light .android-at-a-glance span {
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.android-search {
+  margin: 10px 18px 14px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  font-size: 12px;
+}
+
+.android-home.light .android-search {
+  color: rgba(36, 48, 58, 0.72);
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.home-grid {
+  display: grid;
+  gap: 13px 10px;
+  padding: 8px 17px;
+  position: relative;
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.android-home.page-0 .android-grid,
+.ios-home.page-0 .ios-grid {
+  animation: page-slide-from-left 0.24s cubic-bezier(0.2, 0.78, 0.22, 1);
+}
+
+.android-home.page-1 .android-grid,
+.ios-home.page-1 .ios-grid {
+  animation: page-slide-from-right 0.24s cubic-bezier(0.2, 0.78, 0.22, 1);
+}
+
+.android-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ios-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding-top: 28px;
+  gap: 16px 11px;
+}
+
+.home-app {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  background: transparent;
+  color: inherit;
+  cursor: default;
+}
+
+.gesture-target {
+  touch-action: none;
+  user-select: none;
+}
+
+button.home-app.gesture-target,
+.ios-sample.gesture-target {
+  min-height: 62px;
+  border-radius: 16px;
+}
+
+.android-dock .gesture-target,
+.ios-dock .gesture-target {
+  min-height: 42px;
+}
+
+.draggable-app {
+  position: relative;
+  z-index: 3;
+  transform: translate(var(--icon-drag-x, 0), var(--icon-drag-y, 0));
+  transition:
+    transform 0.2s ease,
+    filter 0.18s ease;
+}
+
+.draggable-app.dragging {
+  z-index: 12;
+  filter: drop-shadow(0 18px 20px rgba(0, 0, 0, 0.26));
+  cursor: grabbing;
+  transition: none;
+}
+
+.draggable-app.dragging .sim-app-icon {
+  transform: scale(1.08);
+}
+
+.android-home.arranging .draggable-app:not(.dragging),
+.ios-home.editing-mode .ios-target:not(.dragging) {
+  animation: icon-jiggle 0.16s ease-in-out infinite alternate;
+}
+
+button.home-app {
+  cursor: pointer;
+}
+
+.home-app small {
+  max-width: 56px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 10px;
+  line-height: 1.15;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.android-home.light .home-app small {
+  color: rgba(36, 48, 58, 0.86);
+}
+
+.page-placeholder {
+  opacity: 0.5;
+}
+
+.page-placeholder > span {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.android-home.round-icons .page-placeholder > span {
+  border-radius: 50%;
+}
+
+.ios-home.paper .home-app small {
+  color: rgba(38, 49, 58, 0.86);
+}
+
+.ios-home.paper .page-placeholder > span {
+  border-color: rgba(38, 49, 58, 0.24);
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.sim-app-icon,
+.sample-icon,
+.sample-dock-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 760;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 8px 14px rgba(0, 0, 0, 0.16);
+}
+
+.ios-icon-frame {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  overflow: visible;
+}
+
+.ios-icon-frame > .sim-app-icon,
+.ios-icon-frame > .sample-icon {
+  grid-area: 1 / 1;
+}
+
+.sim-app-icon::after,
+.sample-icon::after,
+.sample-dock-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.22), transparent 42%),
+    linear-gradient(335deg, rgba(0, 0, 0, 0.14), transparent 48%);
+  mix-blend-mode: soft-light;
+}
+
+.sim-app-icon img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.generated-app-icon {
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.34), transparent 32%),
+    linear-gradient(145deg, #166b5a 0%, #2563eb 58%, #e38a2f 100%);
+}
+
+.generated-app-icon img {
+  width: 64%;
+  height: 64%;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+.generated-app-icon svg {
+  width: 48%;
+  height: 48%;
+  color: rgba(255, 255, 255, 0.94);
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.26));
+}
+
+/* Generated notification app-icon tile: brand-colored tile with the white notification
+   glyph centered, matching the status-bar silhouette instead of raw source art. */
+.notif-app-tile {
+  background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.24), transparent 62%);
+}
+
+.notif-app-tile img {
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.28));
+}
+
+.notif-app-tile svg {
+  color: rgba(255, 255, 255, 0.95);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.26));
+}
+
+.android-mask.circle {
+  border-radius: 50%;
+}
+
+.android-mask.squircle {
+  border-radius: 28%;
+}
+
+.android-mask.rounded {
+  border-radius: 18%;
+}
+
+.android-mask.square {
+  border-radius: 5px;
+}
+
+.android-mask.themed {
+  background: #d7f2e6 !important;
+}
+
+.android-mask.themed.light {
+  background: #d7f2e6 !important;
+}
+
+.android-mask.themed.dark {
+  background: #24362d !important;
+}
+
+.android-mask.themed.light img {
+  filter: brightness(0) saturate(100%) invert(22%) sepia(22%) saturate(1237%) hue-rotate(116deg) brightness(86%) contrast(89%);
+}
+
+.android-mask.themed.dark img {
+  filter: brightness(0) saturate(100%) invert(92%) sepia(14%) saturate(424%) hue-rotate(85deg) brightness(102%) contrast(94%);
+}
+
+.android-app-shortcuts {
+  position: absolute;
+  z-index: 6;
+  right: 18px;
+  top: 244px;
+  width: 154px;
+  padding: 8px;
+  border-radius: 18px;
+  display: grid;
+  gap: 4px;
+  background: rgba(243, 248, 250, 0.96);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(14px);
+  animation: shortcut-pop 0.16s ease;
+}
+
+.android-drag-zones {
+  position: absolute;
+  z-index: 5;
+  inset: 50px 14px 90px;
+  pointer-events: none;
+}
+
+.android-drag-zones span {
+  position: absolute;
+  left: 50%;
+  min-width: 72px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  transform: translateX(-50%);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(12, 22, 32, 0.48);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  font-size: 11px;
+  font-weight: 720;
+}
+
+.android-drag-zones .top-zone {
+  top: 0;
+}
+
+.android-drag-zones .bottom-zone {
+  bottom: 0;
+}
+
+.home-page-dots,
+.ios-dots {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 94px;
+  display: inline-flex;
+  gap: 6px;
+  transform: translateX(-50%);
+}
+
+.home-page-dots button,
+.ios-dots button {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.38);
+  cursor: pointer;
+}
+
+.home-page-dots button.active,
+.ios-dots button.active {
+  width: 18px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.android-home.light .home-page-dots button {
+  background: rgba(36, 48, 58, 0.24);
+}
+
+.android-home.light .home-page-dots button.active {
+  background: rgba(36, 48, 58, 0.72);
+}
+
+.android-app-drawer {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 68%;
+  border-radius: 26px 26px 0 0;
+  padding: 10px 16px 86px;
+  color: #102027;
+  background: rgba(245, 249, 250, 0.96);
+  box-shadow: 0 -18px 44px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+  transform: translateY(max(0px, var(--drawer-pull, 0px)));
+  animation: drawer-rise 0.22s cubic-bezier(0.2, 0.78, 0.22, 1);
+}
+
+.drawer-grabber {
+  width: 44px;
+  height: 19px;
+  border: 0;
+  margin: 0 auto 7px;
+  display: block;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  touch-action: none;
+}
+
+.drawer-grabber::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 8px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(66, 82, 91, 0.34);
+}
+
+.drawer-search {
+  height: 34px;
+  border-radius: 999px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  color: #60707d;
+  background: rgba(222, 232, 236, 0.86);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px 10px;
+  margin-top: 14px;
+}
+
+.android-app-drawer .home-app small {
+  color: #26333a;
+}
+
+.drawer-target-app {
+  cursor: pointer;
+}
+
+.drawer-target-app .sim-app-icon {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 10px 16px rgba(28, 107, 88, 0.18);
+}
+
+.android-detail-sheet {
+  position: absolute;
+  z-index: 8;
+  left: 14px;
+  right: 14px;
+  bottom: 86px;
+  border-radius: 24px;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+  color: #1f2933;
+  background: rgba(246, 250, 252, 0.96);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px);
+  animation: drawer-rise 0.18s cubic-bezier(0.2, 0.78, 0.22, 1);
+}
+
+.android-detail-sheet .sheet-grabber {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  justify-self: center;
+  background: rgba(66, 82, 91, 0.3);
+}
+
+.android-detail-sheet strong {
+  font-size: 14px;
+}
+
+.android-detail-sheet p {
+  margin: 0;
+  color: #5f6f7a;
+  font-size: 12px;
+  line-height: 1.38;
+}
+
+.android-detail-sheet button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 17px;
+  color: #ffffff;
+  background: #1c6b58;
+  font-size: 12px;
+  font-weight: 760;
+  cursor: pointer;
+}
+
+.android-app-shortcuts button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 12px;
+  padding: 0 10px;
+  text-align: left;
+  color: #24302c;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.android-app-shortcuts button:hover {
+  background: rgba(23, 79, 64, 0.1);
+}
+
+.ios-mask {
+  border-radius: 22.4%;
+}
+
+.ios-target.editing,
+.ios-sample.editing {
+  animation: icon-jiggle 0.16s ease-in-out infinite alternate;
+}
+
+.ios-badge {
+  position: absolute;
+  top: -2px;
+  right: -3px;
+  z-index: 4;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: #e11d48;
+  font-size: 11px;
+  line-height: 18px;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+.delete-dot {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  z-index: 4;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #20252b;
+  background: #f0f3f5;
+  font-size: 15px;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.android-dock,
+.ios-dock {
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  min-height: 64px;
+  padding: 10px 14px;
+  border-radius: 22px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
+}
+
+.ios-dock {
+  bottom: 22px;
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.android-home.arranging .android-dock,
+.ios-home.editing-mode .ios-dock {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+.android-dock .dock-target,
+.ios-dock .dock-target {
+  gap: 0;
+}
+
+.android-dock .dock-target small,
+.ios-dock .dock-target small {
+  display: none;
+}
+
+.android-dock .dock-target .sim-app-icon,
+.ios-dock .dock-target .sim-app-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.sample-dock-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  font-size: 14px;
+}
+
+.sample-dock-icon.android-mask.circle {
+  border-radius: 50%;
+}
+
+.dock-drawer-button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.05)),
+    rgba(12, 22, 32, 0.28);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 8px 14px rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+}
+
+.shade-handle {
+  width: 112px;
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  position: absolute;
+  z-index: 9;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  touch-action: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease,
+    background-color 0.16s ease;
+}
+
+.shade-handle::before {
+  content: "";
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  top: 10px;
+  height: 4px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.62;
+}
+
+.shade-handle svg {
+  margin-top: 8px;
+}
+
+.shade-handle-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.notification-shade {
+  position: absolute;
+  z-index: 8;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  padding: 52px 14px 14px;
+  color: #ecf4f7;
+  background: rgba(20, 30, 39, 0.92);
+  backdrop-filter: blur(18px);
+  transform: translateY(calc(-100% + var(--shade-drag, 0px)));
+  pointer-events: none;
+  transition:
+    transform 0.26s ease,
+    opacity 0.22s ease;
+  opacity: 0;
+  touch-action: none;
+}
+
+.notification-shade.open {
+  transform: translateY(var(--shade-drag, 0px));
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.notification-shade-grabber {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  width: 108px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.notification-shade-grabber::before {
+  content: "";
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  top: 14px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(236, 244, 247, 0.72);
+}
+
+.quick-settings {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.quick-settings button {
+  min-width: 0;
+  height: 34px;
+  border: 0;
+  border-radius: 17px;
+  display: grid;
+  place-items: center;
+  color: #9fb5c4;
+  background: rgba(74, 103, 128, 0.42);
+  font-size: 11px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.quick-settings button.active {
+  color: #dbeafe;
+  background: rgba(74, 103, 128, 0.82);
+}
+
+.sim-notification,
+.no-notification {
+  border-radius: 18px;
+  background: #f4f7fb;
+  color: #1f2933;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.sim-notification {
+  position: relative;
+  padding: 10px;
+  transform: translateX(var(--notification-drag, 0px));
+  transition:
+    min-height 0.2s ease,
+    transform 0.18s ease,
+    opacity 0.18s ease;
+  touch-action: none;
+}
+
+.sim-notification.swiping {
+  transition: none;
+}
+
+.sim-notification.swiping::before {
+  content: "清除";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.notification-main {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.notification-main strong {
+  display: block;
+  font-size: 13px;
+}
+
+.notification-main small {
+  display: block;
+  margin-top: 2px;
+  color: #60707d;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.notification-small-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: #1f2b36;
+}
+
+.notification-small-icon img {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+}
+
+.notification-expanded-copy {
+  margin: 10px 2px 0 42px;
+  color: #46535f;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.notification-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.notification-actions button {
+  height: 28px;
+  border: 0;
+  border-radius: 14px;
+  padding: 0 10px;
+  color: #174f40;
+  background: #e0f2ea;
+  font-size: 11px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.no-notification {
+  min-height: 96px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 5px;
+  padding: 14px 16px;
+  text-align: center;
+  color: #64717c;
+  font-size: 12px;
+}
+
+.no-notification svg {
+  opacity: 0.5;
+}
+
+.no-notification strong {
+  font-size: 13px;
+  color: #3f4c58;
+}
+
+.no-notification small {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #8a99a6;
+}
+
+/* ===== 顶部悬浮通知横幅（heads-up） ===== */
+.android-heads-up {
+  position: absolute;
+  z-index: 9;
+  top: 46px;
+  left: 10px;
+  right: 10px;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 30px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: #f4f7fb;
+  color: #1f2933;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
+  transform: translateY(var(--headsup-drag, 0px));
+  touch-action: none;
+  cursor: pointer;
+  animation: heads-up-drop 0.32s cubic-bezier(0.2, 0.82, 0.24, 1);
+}
+
+.android-heads-up .notification-small-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.android-heads-up-copy {
+  min-width: 0;
+}
+
+.android-heads-up-copy strong {
+  display: block;
+  font-size: 12.5px;
+}
+
+.android-heads-up-copy small {
+  display: block;
+  margin-top: 2px;
+  color: #60707d;
+  font-size: 10.5px;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.android-heads-up-open {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #174f40;
+  background: #e0f2ea;
+  cursor: pointer;
+}
+
+@keyframes heads-up-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-72px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 通知模拟器浅色系统模式 ===== */
+.android-home.notification-mode.light {
+  background:
+    radial-gradient(circle at 26% 18%, rgba(14, 165, 233, 0.24), transparent 34%),
+    linear-gradient(160deg, #eef4f6 0%, #dbe7e9 58%, #f6faf7 100%);
+}
+
+.android-home.notification-mode.light .status-notification-dot {
+  background: transparent;
+}
+
+/* 通知 PNG 是白色透明蒙版；浅色状态栏会把小图标染成深色，用 invert 近似系统着色效果。 */
+.android-home.notification-mode.light .status-notification-dot img {
+  filter: invert(1);
+}
+
+.android-home.notification-mode.light .shade-handle {
+  color: rgba(20, 30, 42, 0.66);
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.android-home.notification-mode.light .notification-shade {
+  color: #1f2933;
+  background: rgba(238, 244, 246, 0.94);
+}
+
+.android-home.notification-mode.light .notification-shade-grabber::before {
+  background: rgba(31, 41, 51, 0.32);
+}
+
+.android-home.notification-mode.light .quick-settings button {
+  color: #4a5b68;
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.android-home.notification-mode.light .quick-settings button.active {
+  color: #0f5132;
+  background: rgba(52, 168, 121, 0.24);
+}
+
+.app-surface {
+  --close-progress: 0;
+  --close-radius: 0px;
+  --close-opacity: 1;
+  --close-preview-y: 0px;
+  --close-scale: 1;
+  --close-shadow-y: 0px;
+  --close-shadow-blur: 0px;
+  --close-shadow-opacity: 0;
+  --close-content-scale: 1;
+  --launch-start-scale: 0.24;
+  --launch-start-y: 122%;
+  --close-final-scale: 0.24;
+  --close-final-y: 150%;
+  --close-final-opacity: 0;
+  --close-final-radius: 30px;
+  --surface-ease: cubic-bezier(0.2, 0, 0, 1);
+  --surface-duration: 0.36s;
+  --surface-opacity-duration: 0.24s;
+  z-index: 10;
+  display: grid;
+  place-items: stretch;
+  background: transparent;
+  border-radius: var(--close-radius);
+  box-shadow: 0 var(--close-shadow-y) var(--close-shadow-blur) rgba(15, 23, 42, var(--close-shadow-opacity));
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(var(--launch-start-y)) scale(var(--launch-start-scale));
+  transform-origin: 50% 88%;
+  transition:
+    opacity var(--surface-opacity-duration) ease,
+    border-radius var(--surface-duration) var(--surface-ease),
+    box-shadow var(--surface-duration) var(--surface-ease),
+    transform var(--surface-duration) var(--surface-ease);
+  will-change: transform, opacity, border-radius;
+}
+
+.app-surface.android {
+  --launch-start-scale: 0.22;
+  --launch-start-y: 116%;
+  --close-final-scale: 0.2;
+  --close-final-y: 150%;
+  --close-final-opacity: 0;
+  --close-final-radius: 30px;
+  --surface-ease: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --surface-duration: 0.68s;
+  --surface-opacity-duration: 0.22s;
+  transform-origin: 50% 86%;
+}
+
+.app-surface.ios {
+  --launch-start-scale: 0.16;
+  --launch-start-y: 140%;
+  --close-final-scale: 0.16;
+  --close-final-y: 182%;
+  --close-final-opacity: 0;
+  --close-final-radius: 42px;
+  --surface-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --surface-duration: 0.82s;
+  --surface-opacity-duration: 0.28s;
+  transform-origin: 50% 91%;
+}
+
+.app-surface.visible {
+  pointer-events: auto;
+}
+
+.app-surface.launching,
+.app-surface.app {
+  opacity: var(--close-opacity, 1);
+  transform: translateY(var(--close-preview-y, 0px)) scale(var(--close-scale, 1));
+}
+
+.app-surface.closing-drag {
+  transition:
+    opacity 70ms linear,
+    border-radius 70ms linear,
+    box-shadow 70ms linear,
+    transform 70ms linear;
+}
+
+.app-surface.closing {
+  opacity: 1;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+}
+
+.launch-screen,
+.app-window-preview {
+  grid-area: 1 / 1;
+}
+
+.launch-screen {
   display: grid;
   place-items: center;
   align-content: center;
   gap: 12px;
-  color: var(--muted);
+  color: #17212b;
   background: #ffffff;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
 }
 
-.empty-preview p {
+.launch-screen .sim-app-icon {
+  width: 82px;
+  height: 82px;
+}
+
+.app-surface.launching .launch-screen .sim-app-icon {
+  animation: app-launch-icon-pop 0.34s cubic-bezier(0.05, 0.7, 0.1, 1) both;
+}
+
+.app-surface.ios.launching .launch-screen .sim-app-icon {
+  animation-duration: 0.48s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.launch-screen strong {
+  font-size: 13px;
+}
+
+.app-window-preview {
+  position: relative;
+  display: grid;
+  grid-template-rows: 52px minmax(0, 1fr);
+  color: #24302c;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(145deg, #e7f4ee, #f7fafc) border-box;
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(var(--close-content-scale));
+  transition:
+    opacity 0.2s ease 0.18s,
+    transform 0.2s ease;
+}
+
+.app-window-preview::before {
+  content: "";
+  position: absolute;
+  inset: 52px 18px auto;
+  height: 92px;
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(28, 107, 88, 0.14), rgba(19, 61, 82, 0.1)),
+    #f7fafc;
+}
+
+.app-surface.app .launch-screen,
+.app-surface.closing .launch-screen {
+  opacity: 0;
+  transform: scale(1.08);
+}
+
+.app-surface.app .app-window-preview,
+.app-surface.closing .app-window-preview {
+  opacity: 1;
+}
+
+.app-surface.closing .app-window-preview {
+  animation: app-window-close var(--surface-duration) var(--surface-ease) both;
+  transform-origin: 50% 88%;
+  transition: none;
+}
+
+.app-surface.ios.closing .app-window-preview {
+  transform-origin: 50% 92%;
+}
+
+.app-window-header {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  align-items: center;
+  padding: 12px 14px 0;
+}
+
+.app-window-header strong {
+  justify-self: center;
+  font-size: 13px;
+}
+
+.app-window-header button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #174f40;
+  background: #edf8f3;
+  cursor: pointer;
+}
+
+.app-window-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+}
+
+.app-window-content span {
+  min-width: 0;
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: #174f40;
+  background: #edf8f3;
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.app-window-content p {
+  max-width: 210px;
   margin: 0;
-  font-size: 14px;
+  color: #6a7974;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.home-indicator-button {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 4;
+  width: 100%;
+  height: 74px;
+  border: 0;
+  transform: translateX(-50%);
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.home-indicator-button::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 130px;
+  height: 4px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: #111827;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease,
+    width 0.16s ease;
+}
+
+.android-gesture-button {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 4;
+  width: 100%;
+  height: 74px;
+  border: 0;
+  transform: translateX(-50%);
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.android-gesture-button::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  width: 106px;
+  height: 4px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: #111827;
+  opacity: 0.72;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease,
+    width 0.16s ease;
+}
+
+.app-surface.closing-drag .home-indicator-button::before {
+  width: 92px;
+  opacity: 0.56;
+  transform: translateX(-50%) translateY(-5px) scaleX(0.78);
+}
+
+.app-surface.closing-drag .android-gesture-button::before {
+  width: 76px;
+  opacity: 0.42;
+  transform: translateX(-50%) translateY(-4px) scaleX(0.72);
+}
+
+.simulator-controls {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.sim-control-button,
+.sim-reset-button {
+  min-width: 0;
+  min-height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #2f4540;
+  background: #fbfcfd;
+  font-size: 12px;
+  font-weight: 720;
+  cursor: pointer;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.sim-control-button:hover:not(:disabled),
+.sim-reset-button:hover:not(:disabled) {
+  color: #174f40;
+  border-color: #b7dacd;
+  background: #f3faf6;
+}
+
+.sim-control-button:active:not(:disabled),
+.sim-reset-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.sim-control-button.active {
+  color: #174f40;
+  border-color: #8fc6b5;
+  background: #edf8f3;
+}
+
+.sim-control-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.sim-control-button span,
+.sim-reset-button {
+  overflow-wrap: anywhere;
+}
+
+.sim-reset-button {
+  grid-column: 1 / -1;
+}
+
+.sim-control-group {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 7px;
+}
+
+.sim-control-group > span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.mask-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.mask-options button {
+  min-height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: #435650;
+  background: #ffffff;
+  font-size: 11px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.mask-options button.active {
+  color: #174f40;
+  border-color: #8fc6b5;
+  background: #edf8f3;
+}
+
+.sim-density-strip {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sim-density-strip span {
+  min-width: 0;
+  padding: 7px 4px;
+  display: grid;
+  gap: 2px;
+  text-align: center;
+  color: var(--muted);
+  background: #fbfcfd;
+  border-right: 1px solid var(--border);
+  font-size: 10px;
+}
+
+.sim-density-strip span:last-child {
+  border-right: 0;
+}
+
+.sim-density-strip strong {
+  color: var(--ink-strong);
+  font-size: 10px;
+}
+
+@keyframes icon-jiggle {
+  from {
+    transform: rotate(-2deg) translateY(0);
+  }
+  to {
+    transform: rotate(2deg) translateY(-1px);
+  }
+}
+
+@keyframes shortcut-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes app-launch-icon-pop {
+  from {
+    opacity: 0.82;
+    transform: scale(0.84) translateY(10px);
+  }
+  58% {
+    opacity: 1;
+    transform: scale(1.04) translateY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes app-window-close {
+  from {
+    opacity: var(--close-opacity, 1);
+    border-radius: var(--close-radius, 0px);
+    box-shadow: 0 var(--close-shadow-y, 0px) var(--close-shadow-blur, 0px) rgba(15, 23, 42, var(--close-shadow-opacity, 0));
+    transform: translateY(var(--close-preview-y, 0px)) scale(var(--close-scale, 1));
+  }
+  68% {
+    opacity: var(--close-opacity, 1);
+  }
+  88% {
+    opacity: 0.32;
+  }
+  to {
+    opacity: var(--close-final-opacity);
+    border-radius: var(--close-final-radius);
+    box-shadow: 0 20px 42px rgba(15, 23, 42, 0.28);
+    transform: translateY(var(--close-final-y)) scale(var(--close-final-scale));
+  }
+}
+
+@keyframes drawer-rise {
+  from {
+    opacity: 0.2;
+    transform: translateY(44%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .preview-section {
@@ -1494,36 +3837,142 @@
 }
 
 .phone-preview {
-  border-radius: 8px;
+  border-radius: 26px;
   overflow: hidden;
   color: #ffffff;
-  background: #17212b;
+  background:
+    radial-gradient(circle at 22% 0%, rgba(91, 141, 222, 0.28), transparent 30%),
+    linear-gradient(180deg, #111922 0%, #1a2631 52%, #101820 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 16px 34px rgba(15, 23, 42, 0.16);
 }
 
 .phone-status {
-  height: 34px;
+  height: 44px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 12px;
-  background: #0b1117;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px 0;
+  background: rgba(6, 12, 18, 0.42);
+  backdrop-filter: blur(16px);
   font-size: 12px;
+  font-weight: 760;
+}
+
+.phone-status div {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.phone-status-battery {
+  width: 22px;
+  height: 10px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  position: relative;
+}
+
+.phone-status-battery::before {
+  content: "";
+  position: absolute;
+  inset: 2px 5px 2px 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.phone-status-battery::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: -4px;
+  width: 2px;
+  height: 4px;
+  border-radius: 0 2px 2px 0;
+  background: currentColor;
+}
+
+.notification-preview-head {
+  min-height: 44px;
+  padding: 10px 16px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  color: rgba(236, 244, 247, 0.9);
+}
+
+.notification-preview-head span {
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.notification-preview-head strong {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.notification-quick-settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+.notification-quick-settings span {
+  min-width: 0;
+  height: 38px;
+  border-radius: 19px;
+  display: grid;
+  place-items: center;
+  color: #dbe8ee;
+  background: rgba(74, 103, 128, 0.68);
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.notification-quick-settings span.active {
+  color: #07202a;
+  background: #a8d8f4;
+}
+
+.notification-brightness {
+  height: 34px;
+  margin: 2px 16px 10px;
+  border-radius: 999px;
+  padding: 4px;
+  background: rgba(74, 103, 128, 0.7);
+}
+
+.notification-brightness span {
+  width: 62%;
+  height: 100%;
+  border-radius: inherit;
+  display: block;
+  background: #eef7fb;
 }
 
 .notification-row {
-  min-height: 78px;
+  min-height: 92px;
+  margin: 0 12px 12px;
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-columns: 36px minmax(0, 1fr);
   gap: 12px;
-  align-items: center;
-  padding: 16px;
+  align-items: start;
+  padding: 12px;
+  border-radius: 20px;
+  color: #17212b;
+  background: #f4f7fb;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
 }
 
 .notification-icon-surface {
   display: inline-grid;
   place-items: center;
-  border-radius: 7px;
-  background: #263646;
+  border-radius: 9px;
+  background: #1f2b36;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
@@ -1534,25 +3983,52 @@
 }
 
 .notification-icon-surface.status-icon {
-  width: 22px;
-  height: 22px;
-  background: #111b25;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: rgba(243, 248, 250, 0.16);
 }
 
 .notification-icon-surface.notification-icon-large {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
 }
 
-.notification-row strong {
-  display: block;
-  font-size: 14px;
+.notification-app-line {
+  min-width: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.notification-app-line strong {
+  min-width: 0;
+  color: #1f2933;
+  font-size: 13px;
+  font-weight: 780;
+}
+
+.notification-app-line small {
+  flex: 0 0 auto;
+  color: #6b7c88;
+  font-size: 11px;
 }
 
 .notification-row p {
-  margin: 2px 0 0;
-  color: #c7d1dc;
+  margin: 4px 0 0;
+  color: #536472;
   font-size: 12px;
+  line-height: 1.42;
+}
+
+.notification-preview-foot {
+  padding: 0 16px 16px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(236, 244, 247, 0.72);
+  font-size: 12px;
+  font-weight: 720;
 }
 
 .ios-grid-preview {
@@ -1728,6 +4204,28 @@
   }
 }
 
+@keyframes page-slide-from-left {
+  from {
+    opacity: 0.36;
+    transform: translateX(-22px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes page-slide-from-right {
+  from {
+    opacity: 0.36;
+    transform: translateX(22px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1737,11 +4235,19 @@
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
   }
+
+  .phone-screen .app-surface.closing .app-window-preview {
+    animation-duration: var(--surface-duration) !important;
+  }
 }
 
 @media (max-width: 1180px) {
   .app-shell {
     grid-template-columns: 250px minmax(0, 1fr);
+  }
+
+  .workflow-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .content-grid {
@@ -1752,9 +4258,44 @@
     border-right: 0;
     border-bottom: 1px solid var(--border);
   }
+
+  .simulator-layout {
+    grid-template-columns: minmax(216px, 292px) minmax(260px, 1fr);
+  }
 }
 
 @media (max-width: 820px) {
+  .unsupported-shell {
+    align-items: start;
+    padding: 18px;
+  }
+
+  .unsupported-panel {
+    padding: 24px 20px;
+  }
+
+  .unsupported-copy h1 {
+    font-size: 27px;
+  }
+
+  .unsupported-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .unsupported-actions .primary-button,
+  .unsupported-actions .secondary-button {
+    width: 100%;
+  }
+
+  .unsupported-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .unsupported-steps div {
+    min-height: auto;
+  }
+
   .app-shell {
     grid-template-columns: 1fr;
   }
@@ -1765,6 +4306,8 @@
 
   .sidebar {
     min-height: auto;
+    padding: 16px 18px 18px;
+    gap: 14px;
     border-right: 0;
     border-bottom: 1px solid var(--border);
     overflow: visible;
@@ -1775,7 +4318,8 @@
   }
 
   .sidebar-collapsed .sidebar {
-    padding: 18px;
+    padding: 16px 18px;
+    gap: 0;
   }
 
   .sidebar-collapsed .brand-block {
@@ -1795,14 +4339,34 @@
 
   .sidebar-toggle,
   .sidebar-toggle:hover {
-    top: 21px;
+    position: absolute;
+    top: 20px;
     left: auto;
     right: 18px;
+    width: 34px;
+    height: 34px;
     transform: none;
+  }
+
+  .sidebar-collapsed .sidebar-toggle,
+  .sidebar-collapsed .sidebar-toggle:hover {
+    left: auto;
+    right: 18px;
   }
 
   .sidebar-toggle:hover {
     transform: scale(1.04);
+  }
+
+  .sidebar-toggle svg {
+    width: 16px;
+    height: 16px;
+    transform: rotate(90deg);
+  }
+
+  .sidebar-collapsed .project-box,
+  .sidebar-collapsed .resource-nav {
+    display: none;
   }
 
   .project-menu.compact-project-menu {
@@ -1811,23 +4375,75 @@
     left: 0;
   }
 
-  .task-tabs {
-    grid-template-columns: 1fr;
+  .project-header {
+    align-items: center;
   }
 
+  .project-open-button {
+    min-height: 34px;
+  }
+
+  .current-project-trigger {
+    min-height: 66px;
+    padding: 9px 10px;
+  }
+
+  .resource-nav {
+    gap: 8px;
+  }
+
+  .resource-nav .section-title {
+    margin-bottom: 0;
+  }
+
+  .task-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .task-tabs button,
   .sidebar-collapsed .task-tabs button {
     width: 100%;
-    grid-template-columns: 20px minmax(0, 1fr) 16px;
-    padding: 0 12px;
-    justify-items: stretch;
+    min-height: 64px;
+    grid-template: auto auto / 1fr;
+    justify-items: center;
+    align-content: center;
+    gap: 6px;
+    padding: 8px 6px;
+    text-align: center;
+    transform: none;
   }
 
+  .task-tabs button > svg:first-child,
+  .sidebar-collapsed .task-tabs button > svg:first-child {
+    grid-area: auto;
+    width: 18px;
+    height: 18px;
+  }
+
+  .task-tabs button.active {
+    transform: none;
+  }
+
+  .selected-mark,
+  .sidebar-collapsed .selected-mark {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    bottom: auto;
+    width: 13px;
+    height: 13px;
+  }
+
+  .task-tabs .sidebar-label,
   .sidebar-collapsed .task-tabs .sidebar-label {
     pointer-events: auto;
     opacity: 1;
     width: auto;
     height: auto;
     overflow: visible;
+    font-size: 12px;
+    line-height: 1.25;
   }
 
   .sidebar-collapsed .resource-nav .section-title {
@@ -1839,7 +4455,8 @@
   }
 
   .topbar {
-    padding-inline: 18px;
+    min-height: auto;
+    padding: 16px 18px;
   }
 
   .processing-banner {
@@ -1848,9 +4465,23 @@
     padding-inline: 18px;
   }
 
+  .workflow-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workflow-overview-card {
+    min-height: 74px;
+    padding: 12px 14px;
+  }
+
   .topbar {
-    align-items: flex-start;
+    align-items: stretch;
     flex-direction: column;
+    gap: 12px;
+  }
+
+  .topbar h2 {
+    font-size: 23px;
   }
 
   .workspace-status {
@@ -1865,21 +4496,57 @@
   }
 
   .stepper button {
-    min-height: 64px;
-    padding: 0 6px;
+    min-height: 58px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: center;
+    justify-items: center;
+    gap: 5px;
+    padding: 6px 4px;
+    white-space: normal;
+  }
+
+  .stepper button svg {
+    grid-row: auto;
+    justify-self: center;
   }
 
   .stepper span {
-    font-size: 11px;
+    display: none;
   }
 
   .stepper strong {
     font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .stepper {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: hidden;
   }
 
   .tool-panel,
   .preview-panel {
     padding: 20px 18px;
+  }
+
+  .panel-heading,
+  .preview-header {
+    gap: 12px;
+  }
+
+  .panel-heading h3,
+  .preview-header h3 {
+    font-size: 19px;
+  }
+
+  .drop-zone {
+    min-height: 158px;
+    padding: 16px;
+  }
+
+  .empty-preview {
+    min-height: 210px;
   }
 
   .control-row {
@@ -1895,9 +4562,51 @@
     justify-self: end;
   }
 
+  .smart-fix-item {
+    grid-template-columns: 20px minmax(0, 1fr);
+  }
+
+  .smart-fix-item-action {
+    grid-column: 2;
+    min-width: 0;
+    justify-content: stretch;
+  }
+
+  .smart-fix-item-action .primary-button,
+  .smart-fix-item-action .secondary-button,
+  .smart-fix-item-action .ghost-button {
+    width: 100%;
+  }
+
   .adaptive-grid,
   .ios-grid-preview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .simulator-layout {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .phone-shell {
+    justify-self: center;
+    max-width: min(292px, calc(100vw - 68px));
+  }
+
+  .simulator-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mask-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sim-density-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sim-density-strip span {
+    border-bottom: 1px solid var(--border);
   }
 
   .density-table {
@@ -1920,4 +4629,186 @@
     flex: 1 1 150px;
   }
 
+}
+
+@media (max-width: 520px) {
+  .workflow-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-overview-card {
+    grid-template-columns: 30px minmax(0, 1fr);
+  }
+
+  .workflow-overview-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand-block h1 {
+    font-size: 17px;
+  }
+
+  .brand-block p,
+  .muted {
+    font-size: 12px;
+  }
+
+  .project-header {
+    gap: 8px;
+  }
+
+  .project-header .section-title {
+    font-size: 12px;
+  }
+
+  .task-tabs {
+    gap: 6px;
+  }
+
+  .task-tabs button,
+  .sidebar-collapsed .task-tabs button {
+    min-height: 60px;
+  }
+
+  .task-tabs .sidebar-label,
+  .sidebar-collapsed .task-tabs .sidebar-label {
+    font-size: 11px;
+  }
+
+  .topbar h2 {
+    font-size: 22px;
+  }
+
+  .status-pill {
+    min-height: 32px;
+    font-size: 12px;
+  }
+
+  .workspace-status-detail {
+    font-size: 11px;
+  }
+
+  .processing-banner.visible {
+    max-height: 82px;
+  }
+
+  .stepper button {
+    min-height: 54px;
+  }
+
+  .stepper strong {
+    font-size: 11px;
+  }
+
+  .preview-header {
+    display: grid;
+  }
+
+  .preview-header-actions {
+    justify-content: stretch;
+  }
+
+  .preview-state,
+  .device-preview-toggle {
+    flex: 1 1 0;
+  }
+
+  .sim-control-button,
+  .sim-reset-button {
+    min-height: 40px;
+    padding-inline: 8px;
+  }
+
+  .simulator-card {
+    padding: 14px;
+  }
+}
+
+/* ===== 能力降级提示条（仅导出模式） ===== */
+.capability-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 14px 26px 0;
+  padding: 11px 14px;
+  border: 1px solid #e5d9b0;
+  border-radius: 12px;
+  background: #fdf8e7;
+  color: #6b5b21;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.capability-banner > svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.capability-banner span {
+  flex: 1;
+  min-width: 0;
+}
+
+.capability-banner-close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin: -3px -4px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.capability-banner-close:hover {
+  background: rgba(107, 91, 33, 0.12);
+}
+
+@media (max-width: 820px) {
+  .capability-banner {
+    margin: 12px 18px 0;
+  }
+}
+
+/* ===== 写入项目结果报告 ===== */
+.write-report {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid #cde4d5;
+  border-radius: 12px;
+  background: #f2faf5;
+  color: #1f5c40;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.write-report.has-skipped {
+  border-color: #ecd9ad;
+  background: #fdf6e3;
+  color: #79601f;
+}
+
+.write-report-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.write-report-head svg {
+  flex: none;
+}
+
+.write-report p {
+  margin: 0;
+  padding-left: 23px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  word-break: break-all;
 }
