@@ -39,6 +39,7 @@ export type FileSystemDirectoryHandle = {
     options?: { create?: boolean },
   ) => Promise<FileSystemFileHandle>
   getFile?: (name: string) => Promise<File>
+  removeEntry?: (name: string, options?: { recursive?: boolean }) => Promise<void>
   isSameEntry?: (other: FileSystemDirectoryHandle) => Promise<boolean>
   queryPermission?: (descriptor?: FileSystemPermissionDescriptor) => Promise<PermissionState>
   requestPermission?: (descriptor?: FileSystemPermissionDescriptor) => Promise<PermissionState>
@@ -196,6 +197,47 @@ export async function validateFlutterProject(root: FileSystemDirectoryHandle): P
   return issues
 }
 
+// Android 资源合并只认资源名不认扩展名：同名的 ic_launcher.webp 与 ic_launcher.png 会冲突。
+// 写入某张栅格图前，先算出需要清掉的同名旧文件（同资源名、不同栅格扩展名）。
+const RES_IMAGE_EXTENSIONS = ['png', 'webp', 'jpg', 'jpeg'] as const
+
+export function conflictingSiblingNames(fileName: string): string[] {
+  const dot = fileName.lastIndexOf('.')
+  if (dot <= 0) {
+    return []
+  }
+  const stem = fileName.slice(0, dot)
+  const ext = fileName.slice(dot + 1).toLowerCase()
+  if (!RES_IMAGE_EXTENSIONS.includes(ext as (typeof RES_IMAGE_EXTENSIONS)[number])) {
+    return []
+  }
+  return RES_IMAGE_EXTENSIONS.filter((candidate) => candidate !== ext).map(
+    (candidate) => `${stem}.${candidate}`,
+  )
+}
+
+export function isAndroidResBucket(dirName: string): boolean {
+  return dirName.startsWith('mipmap') || dirName.startsWith('drawable')
+}
+
+export function extractLauncherBackgroundHex(xml: string): string | null {
+  const match = xml.match(/<color\s+name="ic_launcher_background"\s*>([^<]+)<\/color>/)
+  return match ? match[1].trim() : null
+}
+
+// 把 ic_launcher_background 合并进已有 colors.xml：存在则替换其值，否则在 </resources> 前插入。
+export function mergeLauncherBackgroundColor(colorsXml: string, hex: string): string {
+  const entry = `<color name="ic_launcher_background">${hex}</color>`
+  const existing = /<color\s+name="ic_launcher_background"\s*>[^<]*<\/color>/
+  if (existing.test(colorsXml)) {
+    return colorsXml.replace(existing, entry)
+  }
+  if (/<\/resources>/.test(colorsXml)) {
+    return colorsXml.replace(/<\/resources>/, `    ${entry}\n</resources>`)
+  }
+  return `${colorsXml.trimEnd()}\n${entry}\n`
+}
+
 export async function writeAssetsToProject(
   root: FileSystemDirectoryHandle,
   assets: GeneratedAsset[],
@@ -219,7 +261,26 @@ export async function writeAssetsToProject(
         report.skipped.push({ path: asset.path, reason: '输出路径无效' })
         continue
       }
+      const dirName = parts[parts.length - 1] ?? ''
       const dir = await ensureDirectory(root, parts)
+
+      // 背景色：已有 colors.xml 定义 ic_launcher_background 时，合并进去并跳过独立文件，避免重复资源。
+      if (fileName === 'ic_launcher_background.xml' && dirName === 'values') {
+        const mergedPath = await mergeBackgroundColorIntoColorsXml(dir, parts, asset)
+        if (mergedPath) {
+          report.written.push(mergedPath)
+          onProgress?.(index + 1, assets.length, asset.label)
+          continue
+        }
+      }
+
+      // Android 图标：先删掉同名的旧栅格文件（如 flutter_launcher_icons 产出的 .webp），再写我们的 .png。
+      if (isAndroidResBucket(dirName)) {
+        for (const sibling of conflictingSiblingNames(fileName)) {
+          await removeEntrySafely(dir, sibling)
+        }
+      }
+
       const fileHandle = await dir.getFileHandle(fileName, { create: true })
       const writable = await fileHandle.createWritable()
       await writable.write(asset.blob)
@@ -235,6 +296,47 @@ export async function writeAssetsToProject(
   }
 
   return report
+}
+
+// 返回被更新的 colors.xml 路径表示已合并；返回 null 表示项目没有 colors.xml，调用方照常写独立文件。
+async function mergeBackgroundColorIntoColorsXml(
+  valuesDir: FileSystemDirectoryHandle,
+  parts: string[],
+  asset: GeneratedAsset,
+): Promise<string | null> {
+  let colorsHandle: FileSystemFileHandle
+  try {
+    colorsHandle = await valuesDir.getFileHandle('colors.xml')
+  } catch {
+    return null
+  }
+
+  const hex = extractLauncherBackgroundHex(await asset.blob.text())
+  if (!hex || !colorsHandle.getFile) {
+    return null
+  }
+
+  const current = await (await colorsHandle.getFile()).text()
+  const next = mergeLauncherBackgroundColor(current, hex)
+  const writable = await colorsHandle.createWritable()
+  await writable.write(next)
+  await writable.close()
+
+  // 清掉历史上写过的独立文件，避免与 colors.xml 里的定义再次重复。
+  await removeEntrySafely(valuesDir, 'ic_launcher_background.xml')
+
+  return `${parts.join('/')}/colors.xml`
+}
+
+async function removeEntrySafely(dir: FileSystemDirectoryHandle, name: string) {
+  if (!dir.removeEntry) {
+    return
+  }
+  try {
+    await dir.removeEntry(name)
+  } catch {
+    // 文件不存在等情况忽略。
+  }
 }
 
 export async function downloadZip(
